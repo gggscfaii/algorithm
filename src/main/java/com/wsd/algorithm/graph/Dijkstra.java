@@ -61,8 +61,9 @@ public class Dijkstra {
         System.out.println("开始执行...");
         while (!unVisited.isEmpty()) {
             int vertexId = pickMinInUnvisited(x);
-            if (vertexId == -1)
+            if (vertexId == -1) {
                 break;
+            }
             //将其加入到已hasvisited集合中,并从未访问列表中去除
             hasVisited.add(vertexId);
             unVisited.remove((Integer) vertexId);
@@ -73,11 +74,11 @@ public class Dijkstra {
         for (int i = 0; i < distances.length; i++) {
             System.out.println(x + "-->" + i + "距离为" + distances[i]);
         }
-        ArrayList mypath = printPath(x, y);
+        ArrayList paths = printPath(x, y);
         StringBuilder sb = new StringBuilder();
         sb.append("路径为:");
-        for (int i = 0; i < mypath.size(); i++) {
-            sb.append(mypath.get(i) + "-->");
+        for (int i = 0; i < paths.size(); i++) {
+            sb.append(paths.get(i) + "-->");
         }
         sb.delete(sb.length() - 3, sb.length());
         System.out.println(sb.toString());
