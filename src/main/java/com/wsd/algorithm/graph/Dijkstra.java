@@ -91,15 +91,15 @@ public class Dijkstra {
      * @param y
      */
     public ArrayList<String> printPath(int x, int y) {
-        ArrayList mypaths = new ArrayList();
+        ArrayList paths = new ArrayList();
         while (y != x) {
-            mypaths.add(y);
-            y = paths[y];
+            paths.add(y);
+            y = this.paths[y];
         }
-        mypaths.add(x);
+        paths.add(x);
         //路径倒置,需要反置回来
-        Collections.reverse(mypaths);
-        return mypaths;
+        Collections.reverse(paths);
+        return paths;
     }
 
     /**
