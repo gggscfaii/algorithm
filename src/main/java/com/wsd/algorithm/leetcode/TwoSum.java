@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * TwoSum
  * 1.两次遍历(未给出)
- * 2.字典方式
+ * 2.字典方式(1次循环)
  * 3.预排序，高低相加
  * Created by sdwang on 2019/7/17 16:28.
  */
@@ -15,16 +15,12 @@ public class TwoSum {
     public int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> numMap = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            numMap.put(target - nums[i], i);
-        }
-
-        for (int i = 0; i < nums.length; i++) {
-            Integer expectIndex = numMap.get(nums[i]);
-            if (expectIndex == null || expectIndex == i) {
-                continue;
+            int value = target - nums[i];
+            Integer index = numMap.get(value);
+            if (index != null) {
+                return new int[]{index, i};
             }
-
-            return new int[]{i, expectIndex};
+            numMap.put(nums[i], i);
         }
         return null;
     }
