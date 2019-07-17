@@ -11,7 +11,7 @@ import java.util.Map;
  * 3.预排序，高低相加
  * Created by sdwang on 2019/7/17 16:28.
  */
-public class TwoSum {
+public class A1_TwoSum {
     public int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> numMap = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
@@ -44,7 +44,7 @@ public class TwoSum {
     public static void main(String[] args) {
         int[] nums = new int[]{2, 7, 11, 15};
 
-        TwoSum sum = new TwoSum();
+        A1_TwoSum sum = new A1_TwoSum();
         int[] indexes = sum.twoSum(nums, 9);
         assert indexes != null;
         assert indexes[0] == 0;

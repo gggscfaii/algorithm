@@ -4,7 +4,7 @@ package com.wsd.algorithm.leetcode;
  * AddTwoNumbers
  * Created by sdwang on 2019/7/17 17:16.
  */
-public class AddTwoNumbers {
+public class A2_AddTwoNumbers {
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode root = null, next = null, node;
@@ -61,7 +61,7 @@ public class AddTwoNumbers {
         l1 = getListNode(arr1);
         l2 = getListNode(arr2);
 
-        AddTwoNumbers numbers = new AddTwoNumbers();
+        A2_AddTwoNumbers numbers = new A2_AddTwoNumbers();
         ListNode node = numbers.addTwoNumbers(l1, l2);
         while (node != null) {
             System.out.print(node.val + "->");
