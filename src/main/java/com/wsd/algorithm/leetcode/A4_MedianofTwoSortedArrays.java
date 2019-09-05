@@ -5,6 +5,10 @@ package com.wsd.algorithm.leetcode;
  * 求两个有序数组中位数：
  * 1.合并两个数组，取中间一个数或两个数
  * 2.分治搜索算法
+ *    len(left_part)=len(right_part)
+ *    max(\text{left\_part}) \leq \min(\text{right\_part})max(left_part)≤min(right_part)
+ *   ji+j=m−i+n−j (or: m - i + n - j + 1m−i+n−j+1
+ *   B[j−1]≤A[i] and \text{A}[i-1] \leq \text{B}[j]A[i−1]≤B[j]
  * Created by sdwang on 2019/9/4 18:27.
  */
 public class A4_MedianofTwoSortedArrays {
