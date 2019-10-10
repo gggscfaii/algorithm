@@ -21,7 +21,7 @@ public class A10_RegularExpressionMatching {
 
         int i = 0, j = 0;
         boolean match = false;
-        while (i < s.length() && j < s.length()) {
+        while (i < s.length() && j < p.length()) {
             if (p.charAt(j) == '.' || p.charAt(j) == s.charAt(i)) {
                 match = true;
             }
