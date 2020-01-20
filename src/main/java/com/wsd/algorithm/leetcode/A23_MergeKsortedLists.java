@@ -5,15 +5,6 @@ package com.wsd.algorithm.leetcode;
  * Created by sdwang on 2020/1/20 10:11.
  */
 public class A23_MergeKsortedLists {
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
     public ListNode mergeKListsOneByOne(ListNode[] lists) {
         if (lists == null) {
             return null;
