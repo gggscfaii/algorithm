@@ -10,5 +10,9 @@ public class IntsTest {
         System.out.println(Integer.numberOfLeadingZeros(4));
         System.out.println(Integer.numberOfTrailingZeros(4));
         System.out.println(Integer.toBinaryString(~15));
+
+        int a = Integer.MIN_VALUE;
+        int b = 1;
+        System.out.println((a ^ b) < 0);
     }
 }
