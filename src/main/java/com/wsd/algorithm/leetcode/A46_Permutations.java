@@ -35,6 +35,6 @@ public class A46_Permutations {
     }
 
     public static void main(String[] args) {
-        System.out.println(permute(new int[]{1, 2, 3, 4}));
+        System.out.println(permute(new int[]{1, 2, 3}));
     }
 }
