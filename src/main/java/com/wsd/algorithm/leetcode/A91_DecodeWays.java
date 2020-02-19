@@ -1,6 +1,8 @@
 package com.wsd.algorithm.leetcode;
 
 /**
+ * 动态规划算法
+ * a,b交换法后续可以尝试
  * Created by sdwang on 2020/2/19.
  */
 public class A91_DecodeWays {
@@ -11,18 +13,16 @@ public class A91_DecodeWays {
         if (length <= 0) return 0;
 
         if (s.charAt(0) == '0') return 0;
-        int dp[] = new int[length];
+        int dp[] = new int[length + 1];
         dp[0] = 1;
-        for (int i = 1; i < length; i++) {
-            if(s.charAt(i) !='0'){
-                dp[i] += dp[i-1];
-            }
-            int str = Integer.parseInt(s.substring(i-1, i+1));
-            if(str >=10 && str <=26) {
-                f[i] += i>1?f[i-2]:1;
+        for (int i = 1; i < length + 1; i++) {
+            dp[i] = (s.charAt(i - 1) == '0') ? 0 : dp[i - 1];
+
+            if (i > 1 && (s.charAt(i - 2) == '1' || (s.charAt(i - 2) == '2' && s.charAt(i - 1) <= '6'))) {
+                dp[i] += dp[i - 2];
             }
         }
-        return dp[length - 1];
+        return dp[length];
     }
 
     public static void main(String[] args) {
