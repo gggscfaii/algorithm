@@ -29,15 +29,25 @@ public class A25_ReverseNodesKnKGroup {
         }
         if (k > 0) return head;
 
-        ListNode next, newHead;
-        newHead = end;
-        while (head != end) {
-            next = head.next;
-            head.next = newHead;
-            newHead = head;
-            head = next;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode cur = dummy.next;
+        while (cur != null && cur.next != end) {
+            ListNode node = cur.next;
+            cur.next = node.next;
+            node.next = dummy.next;
+            dummy.next = node;
         }
-        return newHead;
+        return dummy.next;
+//        ListNode next, newHead;
+//        newHead = end;
+//        while (head != end) {
+//            next = head.next;
+//            head.next = newHead;
+//            newHead = head;
+//            head = next;
+//        }
+//        return newHead;
     }
 
     public static void main(String[] args) {
