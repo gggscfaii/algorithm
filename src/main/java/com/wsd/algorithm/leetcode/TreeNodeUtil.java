@@ -23,7 +23,6 @@ public class TreeNodeUtil {
 
     public static void print(TreeNode root) {
         if (root == null) {
-            System.out.print("null,");
             return;
         }
 
