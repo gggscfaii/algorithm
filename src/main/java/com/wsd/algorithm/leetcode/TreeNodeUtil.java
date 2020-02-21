@@ -6,27 +6,18 @@ package com.wsd.algorithm.leetcode;
 public class TreeNodeUtil {
 
     public static TreeNode newTreeNode(Integer nums[]) {
+        return newTreeNode(nums, 0);
+    }
 
-        TreeNode root = new TreeNode(nums[0]);
-        TreeNode head = root;
-        for (int i = 1; i < nums.length; i += 2) {
-            TreeNode left = null, right = null;
-            if (nums[i] != null) {
-                left = new TreeNode(nums[i]);
-                head.left = left;
-            }
+    public static TreeNode newTreeNode(Integer nums[], int rootIndex) {
 
-            if (i + 1 < nums.length && nums[i + 1] != null) {
-                right = new TreeNode(nums[i + 1]);
-                head.right = right;
-            }
-
-            if (left != null) {
-                head = left;
-            } else {
-                head = right;
-            }
+        if (rootIndex >= nums.length || nums[rootIndex] == null) {
+            return null;
         }
+
+        TreeNode root = new TreeNode(nums[rootIndex]);
+        root.left = newTreeNode(nums, rootIndex * 2 + 1);
+        root.right = newTreeNode(nums, rootIndex * 2 + 2);
         return root;
     }
 
