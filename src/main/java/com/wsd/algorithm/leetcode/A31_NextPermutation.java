@@ -17,10 +17,6 @@ public class A31_NextPermutation {
                 }
 
                 swap(nums, j, i - 1);
-                int tmp = nums[j];
-                nums[j] = nums[i - 1];
-                nums[i - 1] = tmp;
-
                 reverse(nums, i, nums.length-1);
                 return;
             }
@@ -49,6 +45,5 @@ public class A31_NextPermutation {
     }
 
     public static void main(String[] args) {
-
     }
 }
