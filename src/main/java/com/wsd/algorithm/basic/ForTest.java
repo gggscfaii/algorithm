@@ -3,6 +3,10 @@ package com.wsd.algorithm.basic;
 import com.google.common.collect.Lists;
 
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by sdwang on 2019/12/28.
@@ -27,6 +31,22 @@ public class ForTest {
         List<Integer> counts1 = Lists.newArrayList();
         for (int i = 0; i < 1000; i++) {
             counts.add(counts.get(i));
+        }
+
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(0, 1, 10, TimeUnit.SECONDS, new LinkedBlockingQueue<>(10), new RejectedExecutionHandler() {
+            @Override
+            public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+
+            }
+        });
+
+        for (int i = 0; i < 10; i++) {
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("test executor");
+                }
+            });
         }
     }
 }
