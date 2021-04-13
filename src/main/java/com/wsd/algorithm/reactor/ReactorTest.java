@@ -63,6 +63,7 @@ public class ReactorTest {
         // flux.subscribe(System.out::println);
         // Thread.sleep(4100);
 
+        Mono<Object> just = Mono.just(1);
 
         Flux<String> flux = Flux.empty();
         Mono<List<String>> mono = flux.collectList();
@@ -72,5 +73,8 @@ public class ReactorTest {
                 System.out.println(strings);
             }
         });
+
+
+        System.out.println(3%3);
     }
 }
