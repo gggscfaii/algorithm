@@ -63,18 +63,28 @@ public class ReactorTest {
         // flux.subscribe(System.out::println);
         // Thread.sleep(4100);
 
-        Mono<Object> just = Mono.just(1);
+        // Mono<Object> just = Mono.just(1);
+        //
+        // Flux<String> flux = Flux.empty();
+        // Mono<List<String>> mono = flux.collectList();
+        // mono.subscribe(new Consumer<List<String>>() {
+        //     @Override
+        //     public void accept(List<String> strings) {
+        //         System.out.println(strings);
+        //     }
+        // });
+        //
+        //
+        // System.out.println(3%3);
 
-        Flux<String> flux = Flux.empty();
-        Mono<List<String>> mono = flux.collectList();
-        mono.subscribe(new Consumer<List<String>>() {
+        Flux<Integer> flux = Flux.just(1, 3, 4, 5);
+        Mono<List<Integer>> listMono = flux.filter(i -> i % 2 == 0).flatMap(i -> Mono.just(i * 2)).collectList();
+
+        listMono.subscribe(new Consumer<List<Integer>>() {
             @Override
-            public void accept(List<String> strings) {
-                System.out.println(strings);
+            public void accept(List<Integer> integers) {
+                System.out.println(integers);
             }
         });
-
-
-        System.out.println(3%3);
     }
 }
