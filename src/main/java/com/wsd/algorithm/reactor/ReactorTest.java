@@ -7,6 +7,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.function.Consumer;
@@ -20,7 +21,7 @@ import java.util.function.Predicate;
  */
 public class ReactorTest {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
         // Flux<Long> flux = Flux.interval(Duration.ofSeconds(1))
         //         .take(10);
         // flux.subscribe(aLong -> {
@@ -77,9 +78,9 @@ public class ReactorTest {
         //
         // System.out.println(3%3);
 
-        Flux<Integer> flux = Flux.just(1, 3, 4, 5);
+        Flux<Integer> flux = Flux.just(1, 3, 5);
         Mono<List<Integer>> listMono = flux.filter(i -> i % 2 == 0).flatMap(i -> Mono.just(i * 2)).collectList();
-
+        System.out.println(listMono.toFuture().get());
         listMono.subscribe(new Consumer<List<Integer>>() {
             @Override
             public void accept(List<Integer> integers) {
