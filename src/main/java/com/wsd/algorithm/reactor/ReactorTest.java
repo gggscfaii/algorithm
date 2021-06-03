@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * ReactorTest
@@ -78,14 +79,38 @@ public class ReactorTest {
         //
         // System.out.println(3%3);
 
-        Flux<Integer> flux = Flux.just(1, 3, 5);
-        Mono<List<Integer>> listMono = flux.filter(i -> i % 2 == 0).flatMap(i -> Mono.just(i * 2)).collectList();
-        System.out.println(listMono.toFuture().get());
-        listMono.subscribe(new Consumer<List<Integer>>() {
-            @Override
-            public void accept(List<Integer> integers) {
-                System.out.println(integers);
-            }
-        });
+        // Flux<Integer> flux = Flux.just(1, 3, 5);
+        // Mono<List<Integer>> listMono = flux.filter(i -> i % 2 == 0).flatMap(i -> Mono.just(i * 2)).collectList();
+        // System.out.println(listMono.toFuture().get());
+        // listMono.subscribe(new Consumer<List<Integer>>() {
+        //     @Override
+        //     public void accept(List<Integer> integers) {
+        //         System.out.println(integers);
+        //     }
+        // });
+
+        // Mono<Integer> integerMono = Mono.fromSupplier(new Supplier<Integer>() {
+        //     @Override
+        //     public Integer get() {
+        //
+        //         try {
+        //             Thread.sleep(2000L);
+        //         } catch (InterruptedException e) {
+        //             e.printStackTrace();
+        //         }
+        //         return 5;
+        //     }
+        // });
+        //
+        // integerMono.subscribe(new Consumer<Integer>() {
+        //     @Override
+        //     public void accept(Integer integer) {
+        //         System.out.println(integer);
+        //     }
+        // });
+        //
+        // System.out.println("123");
+
+        System.out.println(Long.MAX_VALUE);
     }
 }
