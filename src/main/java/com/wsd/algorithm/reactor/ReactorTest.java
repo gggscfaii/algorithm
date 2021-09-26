@@ -1,12 +1,17 @@
 package com.wsd.algorithm.reactor;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Mono;
 
+import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
@@ -111,6 +116,45 @@ public class ReactorTest {
         //
         // System.out.println("123");
 
-        System.out.println(Long.MAX_VALUE);
+        // System.out.println(Long.MAX_VALUE);
+
+        // Mono<Void> empty = Mono.empty();
+        // Void integer = empty.toFuture().get();
+        // System.out.println(integer);
+
+
+        // Set<Integer> set1 = Sets.newHashSet(1,6);
+        // Set<Integer> set2 = Sets.newHashSet(2, 3, 4, 5);
+        //
+        // System.out.println(Lists.newLinkedList(Sets.difference(set1, set2)));
+        //
+        // BigDecimal ones = BigDecimal.valueOf(1L);
+        // BigDecimal divide = ones.divide(BigDecimal.ZERO);
+        // System.out.println(divide);
+
+        Flux<Integer> flux = Flux.just(1, 2, 3, 4, 5);
+        Mono<List<Integer>> listMono = flux.filter(i -> {
+            System.out.println(i);
+            return i % 2 == 0;
+        }).flatMap(i -> Mono.just(i * 2)).collectList();
+        listMono.subscribe(new Consumer<List<Integer>>() {
+            @Override
+            public void accept(List<Integer> integers) {
+                System.out.println(integers);
+            }
+        });
+        listMono.subscribe(new Consumer<List<Integer>>() {
+            @Override
+            public void accept(List<Integer> integers) {
+                System.out.println(integers);
+            }
+        });
+
+    }
+
+    private static final Object lock = new Object();
+
+    public synchronized static void test() throws InterruptedException {
+        lock.wait();
     }
 }
