@@ -2,6 +2,7 @@ package com.wsd.algorithm.reactor;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import org.reactivestreams.Publisher;
 import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
@@ -9,6 +10,7 @@ import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +18,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -132,24 +135,33 @@ public class ReactorTest {
         // BigDecimal divide = ones.divide(BigDecimal.ZERO);
         // System.out.println(divide);
 
-        Flux<Integer> flux = Flux.just(1, 2, 3, 4, 5);
-        Mono<List<Integer>> listMono = flux.filter(i -> {
-            System.out.println(i);
-            return i % 2 == 0;
-        }).flatMap(i -> Mono.just(i * 2)).collectList();
-        listMono.subscribe(new Consumer<List<Integer>>() {
-            @Override
-            public void accept(List<Integer> integers) {
-                System.out.println(integers);
-            }
-        });
-        listMono.subscribe(new Consumer<List<Integer>>() {
-            @Override
-            public void accept(List<Integer> integers) {
-                System.out.println(integers);
-            }
-        });
+        // Flux<Integer> flux = Flux.just(1, 2, 3, 4, 5);
+        // Mono<List<Integer>> listMono = flux.filter(i -> {
+        //     System.out.println(i);
+        //     return i % 2 == 0;
+        // }).flatMap(i -> Mono.just(i * 2)).collectList();
+        // listMono.subscribe(new Consumer<List<Integer>>() {
+        //     @Override
+        //     public void accept(List<Integer> integers) {
+        //         System.out.println(integers);
+        //     }
+        // });
+        // listMono.subscribe(new Consumer<List<Integer>>() {
+        //     @Override
+        //     public void accept(List<Integer> integers) {
+        //         System.out.println(integers);
+        //     }
+        // });
 
+
+        Flux<Integer> flux = Flux.just();
+        flux.flatMap(new Function<Integer, Mono<Integer>>() {
+            @Override
+            public Mono<Integer> apply(Integer integer) {
+                System.out.println(integer);
+                return Mono.just(integer);
+            }
+        });
     }
 
     private static final Object lock = new Object();
