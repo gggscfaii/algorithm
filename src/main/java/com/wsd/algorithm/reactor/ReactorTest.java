@@ -162,6 +162,14 @@ public class ReactorTest {
                 return Mono.just(integer);
             }
         });
+
+        Mono<Integer> me = Mono.empty();
+        me.subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) {
+                System.out.println(integer);
+            }
+        });
     }
 
     private static final Object lock = new Object();
