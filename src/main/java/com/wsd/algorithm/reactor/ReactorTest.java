@@ -7,6 +7,8 @@ import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
@@ -154,21 +157,69 @@ public class ReactorTest {
         // });
 
 
-        Flux<Integer> flux = Flux.just();
-        flux.flatMap(new Function<Integer, Mono<Integer>>() {
+        // Flux<Integer> flux = Flux.just();
+        // flux.flatMap(new Function<Integer, Mono<Integer>>() {
+        //     @Override
+        //     public Mono<Integer> apply(Integer integer) {
+        //         System.out.println(integer);
+        //         return Mono.just(integer);
+        //     }
+        // });
+        //
+        // Mono<Integer> me = Mono.empty();
+        // me.subscribe(new Consumer<Integer>() {
+        //     @Override
+        //     public void accept(Integer integer) {
+        //         System.out.println(integer);
+        //     }
+        // });
+
+        Mono<Integer> mono1 = Mono.just(1);
+
+        CompletableFuture<Integer> future1 = new CompletableFuture<>();
+        Mono<Integer> mono2 = Mono.fromFuture(future1);
+        Thread thread1 = new Thread(new Runnable() {
             @Override
-            public Mono<Integer> apply(Integer integer) {
-                System.out.println(integer);
-                return Mono.just(integer);
+            public void run() {
+                try {
+                    Thread.sleep(200L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                future1.complete(2);
+                // future1.completeExceptionally(new RuntimeException("123"));
             }
         });
+        thread1.start();
 
-        Mono<Integer> me = Mono.empty();
-        me.subscribe(new Consumer<Integer>() {
+        CompletableFuture<Integer> future = new CompletableFuture<>();
+        Mono<Integer> mono3 = Mono.fromFuture(future);
+        Thread thread = new Thread(new Runnable() {
             @Override
-            public void accept(Integer integer) {
-                System.out.println(integer);
+            public void run() {
+                // try {
+                //     Thread.sleep(200L);
+                // } catch (InterruptedException e) {
+                //     e.printStackTrace();
+                // }
+
+                // future.complete(3);
+                future.completeExceptionally(new RuntimeException("123"));
             }
+        });
+        thread.start();
+
+        Scheduler scheduler = Schedulers.newParallel("par-grp");
+        mono3 = mono3.publishOn(scheduler).flatMap(o -> {
+            System.out.println(o + "2233");
+            return Mono.just(30);
+        });
+        Mono<Integer> mono = Flux.merge(mono1, mono2, mono3).collectList().publishOn(scheduler)
+                .flatMap((Function<List<Integer>, Mono<Integer>>) integers -> Mono.just(4));
+
+        mono.subscribe(integer -> System.out.println(integer), e -> {
+            System.out.println(e);
         });
     }
 
