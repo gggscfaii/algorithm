@@ -38,5 +38,33 @@ public class Candy {
     public static void main(String[] args) {
         System.out.println(candy(new int[]{1, 1, 2, 3}));
         System.out.println(candy(new int[]{5, 1, 2, 3}));
+
+        int[] a = new int[]{5, 1, 2, 3};
+        int[] a1 = new int[]{5, 1, 2, 3};
+
+        a = a1;
+        System.out.println(a);
+
+        try {
+
+            int ax[] = new int[2];
+            int x;
+            ax[2] = 3;
+            x = 2;
+            System.out.println(x);
+
+
+        }
+//        catch (Exception e) {
+//
+//        }
+        finally {
+
+            /**
+             *
+             */
+
+        }
+        System.out.println("123");
     }
 }
