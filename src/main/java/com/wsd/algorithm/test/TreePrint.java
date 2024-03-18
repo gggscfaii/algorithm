@@ -80,5 +80,25 @@ public class TreePrint {
         treePrintMethod(root, "");
 
         Stack<Integer> s = new Stack<>();
+
+        Stack<Character> s1 = new Stack<>();
+        String ss = "123";
+        s1.push(ss.charAt(0));
+
+        System.out.println(s1.pop());
+
+        try{
+            testxx();
+        } catch(Exception e) {
+            System.out.println("xxx");
+        }
+    }
+
+    public static void testxx() {
+        try {
+            int a = 1 / 0;
+        } finally {
+            System.out.println("1");
+        }
     }
 }

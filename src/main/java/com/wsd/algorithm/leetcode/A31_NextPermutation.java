@@ -1,5 +1,9 @@
 package com.wsd.algorithm.leetcode;
 
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 /**
  * A31_NextPermutation
  * Created by sdwang on 2020/1/21 17:47.
@@ -45,5 +49,10 @@ public class A31_NextPermutation {
     }
 
     public static void main(String[] args) {
+
+        int nums[] = {1, 2, 3};
+
+        nextPermutation(nums);
+
     }
 }
