@@ -24,6 +24,10 @@ public class ddtest {
     }
 
     static String findMaxSubStr(String s) {
+        if (s.length() == 1) {
+            return s;
+        }
+
         int maxLength = -1;
         String resultStr = "";
         for (int i = 0; i < s.length(); i++) {
