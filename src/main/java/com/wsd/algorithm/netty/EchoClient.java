@@ -1,11 +1,7 @@
 package com.wsd.algorithm.netty;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -51,15 +47,16 @@ public final class EchoClient {
                          p.addLast(sslCtx.newHandler(ch.alloc(), HOST, PORT));
                      }
                      //p.addLast(new LoggingHandler(LogLevel.INFO));
+                     p.addLast(new EchoServerOutHandler());
                      p.addLast(new ClientHandle());
                  }
              });
 
             // Start the client.
             ChannelFuture f = b.connect(HOST, PORT).sync();
-
+            Channel channel = f.channel();
             // Wait until the connection is closed.
-            f.channel().closeFuture().sync();
+            channel.closeFuture().sync();
         } finally {
             // Shut down the event loop to terminate all threads.
             group.shutdownGracefully();

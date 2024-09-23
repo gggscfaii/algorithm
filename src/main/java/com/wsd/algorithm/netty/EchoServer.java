@@ -52,6 +52,7 @@ public final class EchoServer {
                      }
                      //p.addLast(new LoggingHandler(LogLevel.INFO));
                      p.addLast(new ServerHandle());
+                     p.addLast(new EchoServerOutHandler());
                  }
              });
 

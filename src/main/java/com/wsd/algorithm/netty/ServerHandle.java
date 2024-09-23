@@ -1,6 +1,8 @@
 package com.wsd.algorithm.netty;
 
+import com.google.common.base.Charsets;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -15,6 +17,12 @@ public class ServerHandle extends ChannelInboundHandlerAdapter {
         byte[] bytes = new byte[byteBuf.readableBytes()];
         byteBuf.readBytes(bytes);
         System.out.println(info() + "read" + new String(bytes));
+
+        String command = "wang shudong";
+        byteBuf = Unpooled.buffer(EchoClient.SIZE);
+        byteBuf.writeBytes(command.getBytes(Charsets.UTF_8));
+
+        ctx.write(byteBuf);
     }
 
     @Override
