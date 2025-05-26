@@ -1,6 +1,7 @@
 package com.wsd.algorithm.interview;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -22,5 +23,13 @@ public class XF {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String readFileToBase64(String filePath) throws IOException {
+        // 读取文件字节
+        byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
+
+        // 转换为 Base64
+        return Base64.getEncoder().encodeToString(fileBytes);
     }
 }
