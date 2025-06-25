@@ -8,10 +8,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class SignUtil {
     public static final String SIGN_FIELD = "sign";
@@ -59,28 +56,37 @@ public class SignUtil {
         return sb.substring(0, sb.length() - 1);
     }
 
+    public static String readFileToBase64(String filePath) throws IOException {
+        // 读取文件字节
+        byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
+
+        // 转换为 Base64
+        return Base64.getEncoder().encodeToString(fileBytes);
+    }
+
     public static void main(String[] args) throws IOException {
 
-        String content = new String(Files.readAllBytes(Paths.get("c:\\data\\long.txt")),
-                StandardCharsets.UTF_8);
-
-        content="{\n" +
-                "    \"user\":\"td_test\",\n" +
-                "    \"sign\":\"df047a32183e7320828a590055d1634a\",\n" +
-                "    \"nonce\":\"123\",\n" +
-                "    \"timestamp\":1747997460000,\n" +
-                "    \"dataKey\": \"phone_clear_increment_td_test_15\"\n" +
-                "}";
-
-
+        System.out.println(readFileToBase64("C:\\data\\doc\\TrueCaller 爬虫系统部署.pdf"));
+//        String content = new String(Files.readAllBytes(Paths.get("c:\\data\\long.txt")),
+//                StandardCharsets.UTF_8);
+//
 //        content="{\n" +
 //                "    \"user\":\"td_test\",\n" +
-//                "    \"sign\":\"047866976d0c046f6bcd8821565645e85b416d5243690be643b3d116fceef61c\",\n" +
+//                "    \"sign\":\"df047a32183e7320828a590055d1634a\",\n" +
 //                "    \"nonce\":\"123\",\n" +
 //                "    \"timestamp\":1747997460000,\n" +
-//                "    \"phone\":188888\n" +
+//                "    \"dataKey\": \"phone_clear_increment_td_test_15\"\n" +
 //                "}";
-        HashMap map = JSONObject.parseObject(content, HashMap.class);
-        System.out.println(createSignHmac(map, "s8blxpcjiutur2ipp6tp0q94sdf9svql"));
+//
+//
+////        content="{\n" +
+////                "    \"user\":\"td_test\",\n" +
+////                "    \"sign\":\"047866976d0c046f6bcd8821565645e85b416d5243690be643b3d116fceef61c\",\n" +
+////                "    \"nonce\":\"123\",\n" +
+////                "    \"timestamp\":1747997460000,\n" +
+////                "    \"phone\":188888\n" +
+////                "}";
+//        HashMap map = JSONObject.parseObject(content, HashMap.class);
+//        System.out.println(createSignHmac(map, "s8blxpcjiutur2ipp6tp0q94sdf9svql"));
     }
 }
