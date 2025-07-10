@@ -18,13 +18,23 @@ public class PhoneCleanTest {
     private static final Random random = new Random();
 
     public static void main(String[] args) throws Exception {
-        String url = uploadFile("C:\\data\\doc\\TrueCaller 爬虫系统部署.pdf");
-        String dataKey = sendCleanPhone(url);
-        String response = sendSearch(dataKey);
-//        System.out.println(response);
+//        String url = uploadFile("C:\\data\\doc\\TrueCaller 爬虫系统部署.pdf");
+        String url1 = uploadFile("C:\\Users\\EDY\\Desktop\\扫面件.JPG");
+        String url2 = uploadFile("C:\\Users\\EDY\\Desktop\\泰迪未来营业执照（新）.pdf");
+
+        String dataKey = sendCleanPhone(url1, url2);
+
+        while (true) {
+            String response = sendSearch(dataKey);
+            System.out.println(response);
+            JSONObject r = JSONObject.parseObject(response);
+            if (r.getInteger("code").equals(0)) {
+                break;
+            }
+        }
 
 
-//        sendSearch("phone_clear_increment_td_test_phone_clear_6");
+//        sendSearch("phone_clear_increment_td_test_phone_clear_20250710_1");
 
     }
 
@@ -37,28 +47,28 @@ public class PhoneCleanTest {
 
         Map<String, String> prop = new HashMap<>();
         prop.put("Content-Type", "application/json");
-        String response = NetUtil.sendPost("http://localhost:8080/phone/clear/query/pay/result/v1", request.toString(), prop);
+        String response = NetUtil.sendPost("https://number-identify.teddymobile.cn/phone/clear/query/pay/result/v1", request.toString(), prop);
         System.out.println(response);
         return response;
     }
 
-    public static String sendCleanPhone(String url) throws IOException {
+    public static String sendCleanPhone(String url1, String url2) throws IOException {
 
         JSONObject request = new JSONObject();
         putRequestBasic(request);
-        request.put("callBackUrl", "http://localhost:8084");
+//        request.put("callBackUrl", "http://10.30.103.56:8084");
         request.put("companyName", "北京泰迪未来科技股份有限公司");
         request.put("licenseNumber", "91110108317961782R");
 
         JSONArray jsonArray = new JSONArray();
         JSONObject file = new JSONObject();
-        file.put("name", "企业执照");
-        file.put("url", url);
+        file.put("name", "泰迪未来营业执照");
+        file.put("url", url1);
         jsonArray.add(file);
 
         JSONObject file1 = new JSONObject();
-        file1.put("name", "企业执照");
-        file1.put("url", url);
+        file1.put("name", "泰迪未来营业执照");
+        file1.put("url", url2);
         jsonArray.add(file1);
 
         request.put("files", jsonArray);
@@ -66,15 +76,15 @@ public class PhoneCleanTest {
         JSONArray phones = new JSONArray();
 //        phones.add("045153807239");
 
-        for (int i = 0; i < 1; i++) {
-            phones.add(String.valueOf(18946276000111L + i));
+        for (String p : Files.readAllLines(Paths.get("C:\\Users\\EDY\\Desktop\\028标记号码.txt"))) {
+            phones.add(p);
         }
         request.put("phones", phones);
         request.put("sign", SignUtil.createSignHmac(request, SK));
 
         Map<String, String> prop = new HashMap<>();
         prop.put("Content-Type", "application/json");
-        String response = NetUtil.sendPost("http://localhost:8080/phone/clear/pay/v1", request.toString(), prop);
+        String response = NetUtil.sendPost("https://number-identify.teddymobile.cn/phone/clear/pay/v1", request.toString(), prop);
         System.out.println(response);
 
         JSONObject jsonObject = JSONObject.parseObject(response);
@@ -93,7 +103,7 @@ public class PhoneCleanTest {
 
         Map<String, String> prop = new HashMap<>();
         prop.put("Content-Type", "application/json");
-        String response = NetUtil.sendPost("http://localhost:8080/phone/clear/uploadcertfile/v1", request.toString(), prop);
+        String response = NetUtil.sendPost("https://number-identify.teddymobile.cn/phone/clear/uploadcertfile/v1", request.toString(), prop);
         System.out.println(response);
 
         JSONObject jsonObject = JSONObject.parseObject(response);
